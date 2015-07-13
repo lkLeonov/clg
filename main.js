@@ -156,7 +156,6 @@ function CloudImages(container, images) {
         // Перебираем все изображения, подставляя в ректы
         for (var i = 0; i < images.length; i++) {
             for (var j = 0; j < rects.length; j++) {
-            	if (rects[j]===undefined) continue;
                 // если изображение влезает, двигаем его как можно ближе к центру и отрисовываем
                 if ( fits(images[i], rects[j]) ) {
      
