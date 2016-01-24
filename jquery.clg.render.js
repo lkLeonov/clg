@@ -1,6 +1,6 @@
 /*!
- * clg v1.0
- * Collage grid layout jQquery plugin
+ * clg v0.5
+ * Collage grid layout jQuery plugin
  * 
  * MIT License
  * by Alexey Leonov
@@ -177,18 +177,13 @@ function getRandomColor() {
         console.log('new active clg!');
       }
 
-      { // \testing time
-
-        var end = new Date().getTime();
-        var time = end - start;
-        console.log('Run time: ' + time + ' ms');
-      }
+console.timeEnd('Render time'); // testing: show render time
 
       return $collage;
     },
 
     show: function() {
-      console.log('Re-animating rendered...');
+      console.log('Cheking if already rendered...');
 
       var $collage = $(this[0]);
       var $items = $collage.children();
@@ -284,7 +279,7 @@ function getRandomColor() {
 
 
   $.fn.clg = function() {
-    start = new Date().getTime(); // testing
+    console.time('Render time'); // testing
 
     // arguments handling logic
 
