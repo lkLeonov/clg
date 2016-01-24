@@ -135,7 +135,7 @@ function getRandomColor() {
         };  console.log('Total Items: ' + itemsCount);
 //\test
 
-        // calc and add props to clg by number of items and other props
+        // calc and add props to clg by number of items in DOM and other props
       {
         var opts = {};
         opts.calc = {
