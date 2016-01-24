@@ -1,3 +1,12 @@
+/*!
+ * clg v1.0
+ * Collage grid layout jQquery plugin
+ * 
+ * MIT License
+ * by Alexey Leonov
+ * alexey5leonov@gmail.com
+ */
+
 // utils
 function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
@@ -8,7 +17,7 @@ function getRandomColor() {
     return color;
 }
   // just extending jquery for using vendor prefixes
-  $.fn.h5u_xcss = function (k, v) {
+  $.fn.pref = function (k, v) {
       return $(this)
           .css('-webkit-' + k, v)
           .css('-moz-' + k, v)
@@ -110,7 +119,7 @@ function getRandomColor() {
 
                       
                       $itemInner.css('opacity', 0);
-                      $itemInner.h5u_xcss('transition', 'opacity ' + (settings.thumbSpeed / 1000.00) + 's ease-in-out');
+                      $itemInner.pref('transition', 'opacity ' + (settings.thumbSpeed / 1000.00) + 's ease-in-out');
                   }
               });
 
