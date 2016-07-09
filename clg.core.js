@@ -8,7 +8,7 @@
  */
 
 
-var Collage = function() {
+var ClgCore = function() {
   var defaults = {
       itemsCount: 10,
       contW: 800,
@@ -22,11 +22,11 @@ var Collage = function() {
   } else options = defaults;
 
   var
-    xc = options.contW/2,
-    yc = options.contH/2,
+    cx = options.contW/2,
+    cy = options.contH/2,
     data = [];
 
-  function sliceRect(rects, rect, itmRect, index) {
+  function sliceRect(rects, rect, itmRect) {
       var a = coords(rect),
           b = coords(itmRect);
       if (b.y1 > a.y1) rects.push({x: a.x1, y: a.y1, w: a.x2 - a.x1, h: b.y1 - a.y1});
@@ -97,15 +97,15 @@ var Collage = function() {
       var r = coords(rect),
           quarter;
 
-      if (r.x1 >= xc && r.y1 >= yc) quarter = 0;
-      if (r.x1 < xc && r.y1 >= yc) quarter = 1;
-      if (r.x1 < xc && r.y1 < yc) quarter = 2;
-      if (r.x1 >= xc && r.y1 < yc) quarter = 3;
+      if (r.x1 >= cx && r.y1 >= cy) quarter = 0;
+      if (r.x1 < cx && r.y1 >= cy) quarter = 1;
+      if (r.x1 < cx && r.y1 < cy) quarter = 2;
+      if (r.x1 >= cx && r.y1 < cy) quarter = 3;
 
       rect.q = quarter;
   }
 
-  function setClosest(rect, quarter) {
+  function setClosestPointOf(rect, quarter) {
       var r = coords(rect),
           x_cl, y_cl;
 
@@ -136,16 +136,17 @@ var Collage = function() {
 
   function setDist(rect, coord_cl) {
 
-      var xx = (xc - coord_cl.x) * (xc-coord_cl.x),
-          yy = (yc - coord_cl.y) * (yc-coord_cl.y),
+      var xx = (cx - coord_cl.x) * (cx-coord_cl.x),
+          yy = (cy - coord_cl.y) * (cy-coord_cl.y),
           dist = Math.sqrt(xx + yy);
 
       rect.dist = dist;
   }
 
+  // setting rect properties: quarter, rect's closest point to center, distance from that point to center
   function setProps(rect) {
       setQuarter(rect);
-      setClosest(rect, rect.q);
+      setClosestPointOf(rect, rect.q);
       setDist(rect, rect.coord_cl);
   }
 
@@ -165,9 +166,9 @@ var Collage = function() {
   
   rects.forEach(setProps);
 
-  for (var i = 0; i < items.length; i++) {
-    for (var j = 0; j < rects.length; j++) {
-      if ( fits(items[i], rects[j]) ) {
+  for (var i = 0; i < items.length; i++) { // for each of all of our itmes
+    for (var j = 0; j < rects.length; j++) { // loop through all of our rects
+      if ( fits(items[i], rects[j]) ) { // check if an item fits to the current rect
 
         saveData( i, alignToCenter(items[i], rects[j]) );
 
@@ -180,7 +181,7 @@ var Collage = function() {
         }
 
         for (var l = 0; l < iRectsInd.length; l++) {
-            sliceRect(rects, rects[iRectsInd[l]], rects[j].ins, iRectsInd[l]);
+            sliceRect(rects, rects[iRectsInd[l]], rects[j].ins);
         }
 
         for (var l = 0; l < iRectsInd.length; l++) {
@@ -204,7 +205,7 @@ var Collage = function() {
 
   }
 
-  console.log('A new collage is successfully calculated...');
+  console.log('CLGCORE: A new collage is successfully calculated...');
 
   // Public interface
 
@@ -218,8 +219,8 @@ var Collage = function() {
 
 // Helpers
 
-function coords(point) { // (x,y,w,h) to (x1,x2,y1,y2) converter
-    return {x1: point.x, x2: point.x+point.w, y1: point.y, y2: point.y+point.h}
+function coords(rect) { // (x,y,w,h) to (x1,x2,y1,y2) converter
+    return {x1: rect.x, x2: rect.x+rect.w, y1: rect.y, y2: rect.y+rect.h}
 }
 
 function intersect(rectA, rectB){
