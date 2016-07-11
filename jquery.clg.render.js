@@ -150,11 +150,6 @@
 					.attr('data-top', newClg.props.top)
 					.attr('data-width', newClg.props.width)
 					.attr('data-height', newClg.props.height);
-
-console.log('---------COLLAGE_W: ', newClg.props.width);
-console.log('---------COLLAGE_H: ', newClg.props.height);
-console.log('---------COLLAGE_W_data: ', $collage.attr('data-width'));
-console.log('---------COLLAGE_H_data: ', $collage.attr('data-height'));
 			}
 
 			// show: // proper adjusting applies only when layout is in document flow
@@ -291,7 +286,7 @@ console.log('---------COLLAGE_H_data: ', $collage.attr('data-height'));
 				collageHeight  = $layout.attr('data-height'),
 				collageWidth  = $layout.attr('data-width');
 
-console.log('colW: ' + collageWidth, 'colH: ' + collageHeight );
+//console.log('colW: ' + collageWidth, 'colH: ' + collageHeight );
 
 			if (!onResizeHandled) {
 				console.log('ADJUST: Applying non resize handled adjusting...')
@@ -313,8 +308,8 @@ console.log('colW: ' + collageWidth, 'colH: ' + collageHeight );
 				lw = mainWidth / collageWidth,
 				lh = (mainHeight - settings.negativeMargin * 2) / collageHeight;
 
-console.log('winWidth: ' + mainWidth, 'WinHeight-marTop-marBot: ' + mainHeight);
-console.log('lw (winWidth/colWidth): ' + lw, 'lh ( ( mainH - negMargs*2 ) / colHeight ): ' + lh)
+//console.log('winWidth: ' + mainWidth, 'WinHeight-marTop-marBot: ' + mainHeight);
+//console.log('lw (winWidth/colWidth): ' + lw, 'lh ( ( mainH - negMargs*2 ) / colHeight ): ' + lh)
 						
 		//downscale
 			var p; // scale Factor
