@@ -1,5 +1,5 @@
 /*!
- * clg v0.5
+ * clg v0.9
  * Collage grid layout jQuery plugin
  * 
  * MIT License
@@ -44,6 +44,8 @@
 
 	var methods = {
 
+// --- RENDER ------------------------------------------------------------------------------------------------------------------
+
 		render: function() {
 
 			settings = $.extend(defaults, arguments[0]); // extending defaults
@@ -67,58 +69,54 @@
 				$(window).unbind('resize');
 			}
 
-				if (isRendered) {
-					console.log('RENDER: Already rendered, opacity to 0');
-					$items.find('.inner').__pref('transition', 'none').css('opacity', 0); // for re-animating
-					
-					// clearing position is probably optional, because of the triggering opacity on items' wrappers + toggling display on items
-					$items.css({
-						top: '',
-						left: '',
-						width: '',
-						height: ''
-					});
-				}
+			if (isRendered) {
+				console.log('RENDER: Already rendered, opacity to 0');
+				$items.find('.inner').__pref('transition', 'none').css('opacity', 0); // for re-animating
+				
+				// clearing position is probably optional, because of the triggering opacity on items' wrappers + toggling display on items
+				$items.css({
+					top: '',
+					left: '',
+					width: '',
+					height: ''
+				});
 
-				else { // not rendered: prepare for animation by inserting wrappers
-
-					console.log('RENDER: Not rendred, wrapping images with inners!')
-					$items
-						.css('box-shadow', '0px 0px 0px ' + settings.padding + 'px ' + settings.paddingColor)
-						.css('border', 'solid ' + settings.padding + 'px ' + settings.paddingColor)
-						.each(function () {
-							var $item = $(this),
-									$img = $item.find('img');
+			} else { // not rendered: prepare for animation by inserting wrappers
+				console.log('RENDER: Not rendred, wrapping images with inners!')
+				$items
+					.css('box-shadow', '0px 0px 0px ' + settings.padding + 'px ' + settings.paddingColor)
+					.css('border', 'solid ' + settings.padding + 'px ' + settings.paddingColor)
+					.each(function () {
+						var $item = $(this),
+								$img = $item.find('img');
 
 
-							if ($img.length > 0) {
-								var $itemInner;
-							 
-								$item.wrapInner('<div class="inner" />');
-								$itemInner = $item.find('.inner');
-								$itemInner
-										.css('position', 'absolute')
-										.css('display', 'block')
-										.css('-webkit-backface-visibility', 'hidden')
-										.css('width', '100%')
-										.css('height', '100%');
-
-								
-								$itemInner.css('opacity', 0);
-								$itemInner.__pref('transition', 'opacity ' + (settings.thumbSpeed / 1000.00) + 's ease-in-out');
-							}
-						});
-
-					// also we need some styling for images
-					$items.find('img').css('width', '100%'); // important !
+						if ($img.length > 0) {
+							var $itemInner;
+						 
+							$item.wrapInner('<div class="inner" />');
+							$itemInner = $item.find('.inner');
+							$itemInner
+									.css('position', 'absolute')
+									.css('display', 'block')
+									.css('-webkit-backface-visibility', 'hidden')
+									.css('width', '100%')
+									.css('height', '100%');
 
 							
-				}
+							$itemInner.css('opacity', 0);
+							$itemInner.__pref('transition', 'opacity ' + (settings.thumbSpeed / 1000.00) + 's ease-in-out');
+						}
+					});
+
+				// also we need some styling for images
+				$items.find('img').css('width', '100%'); // important !		
+			}
 
 // test
-				for (var i=0; i<itemsCount; i++ ){
-					$items.eq(i).css('background-color', getRandomColor());
-				};  console.log('RENDER: Total Items: ' + itemsCount);
+			for (var i=0; i<itemsCount; i++ ){
+				$items.eq(i).css('background-color', getRandomColor());
+			};  console.log('RENDER: Total Items: ' + itemsCount);
 // \test
 
 			{ // calc and add props to clg by number of items in DOM and other props
@@ -130,7 +128,9 @@
 					minItemSize: settings.minItemSize,
 					maxItemSize: settings.maxItemSize
 				}
+
 				var newClg = ClgCore(opts.calc);
+
 				newClg.items.forEach(function(item){
 					$items.eq(item.ind).css({
 						position: 'absolute', // important !
@@ -177,6 +177,7 @@
 			return $collage;
 		},
 
+//--- SHOW -----------------------------------------------------------------------------------------------------------------
 
 		show: function() {
 			console.log('SHOW: Cheking if already rendered...');
@@ -205,7 +206,6 @@
 					
 				}
 				else { // current is active
-					console.log('----------------CURRENT IS ACTIVE')
 					// just hiding items using opacity for re-animating
 					$(activeClg).find('.inner').css('opacity', 0);
 				}
@@ -220,6 +220,7 @@
 
 		},
 
+//--- ANIMATE -------------------------------------------------------------------------------------------------------------
 
 		animate: function() {
 
@@ -273,6 +274,7 @@
 
 		}, // end: animate
 
+//--- ADJUST --------------------------------------------------------------------------------------------------------------------
 
 		adjust: function($container, $layout, settings, onResizeHandled) {
 
@@ -285,62 +287,64 @@
 
 console.log('colW: ' + collageWidth, 'colH: ' + collageHeight );
 
-				if (!onResizeHandled) {
-					console.log('ADJUST: Applying non resize handled adjusting...')
-					// initial non event-handled instructions
-				 
-					$layout 
-						.width(canvasWidth)
-						.height(canvasHeight)
-						.offset({'top': -collageOffsetTop + settings.marginTop});
-				}
+			if (!onResizeHandled) {
+				console.log('ADJUST: Applying non resize handled adjusting...')
+				// initial non event-handled instructions
+			 
+				$layout 
+					.width(canvasWidth)
+					.height(canvasHeight)
+					.offset({'top': -collageOffsetTop + settings.marginTop});
+			}
 
 						// the adjusting (for window.onresize callback)
 
-						var
-							mainWidth = $(window).width(),
-							mainHeight = $(window).height() - settings.marginTop - settings.marginBottom;
+			var
+				mainWidth = $(window).width(),
+				mainHeight = $(window).height() - settings.marginTop - settings.marginBottom;
 
-						var
-							lw = mainWidth / collageWidth,
-							lh = (mainHeight - settings.negativeMargin * 2) / collageHeight;
+			var
+				lw = mainWidth / collageWidth,
+				lh = (mainHeight - settings.negativeMargin * 2) / collageHeight;
 
 console.log('winWidth: ' + mainWidth, 'WinHeight-marTop-marBot: ' + mainHeight);
-console.log('lw (winWidth/colWidth): ' + lw, 'lh ( (mainH - negMargs)*2 / colHeight ): ' + lh)
+console.log('lw (winWidth/colWidth): ' + lw, 'lh ( ( mainH - negMargs*2 ) / colHeight ): ' + lh)
 						
-						//downscale
-							var p; // scale Factor
-							if (lw < 1 || lh < 1) {
-								p = Math.min(lw, lh);
-								$layout
-									.css('transform', 'scale(' + p + ')')
-									.offset({
-										'top':  settings.marginTop + settings.negativeMargin - (collageOffsetTop * p),
-										'left':  -(canvasWidth*p - mainWidth) / 2
-									});
-							
-							} else { // TODO:
-						//upscale
-						  // back to original size
-								p = 1;
-								$layout
-									.css('transform', 'scale(' + p + ')')
-									.offset({
-										'top':  settings.marginTop + settings.negativeMargin - (collageOffsetTop * p),
-										'left':  -(canvasWidth*p - mainWidth) / 2
-									});
-						
-							}
+		//downscale
+			var p; // scale Factor
+			if (lw < 1 || lh < 1) {
+				p = Math.min(lw, lh);
+				// p = p * 0.7; // solves moblile portrait problem
+				$layout
+					.css('transform', 'scale(' + p + ')')
+					.offset({
+						'top':  settings.marginTop + settings.negativeMargin - (collageOffsetTop * p),
+						'left':  -(canvasWidth*p - mainWidth) / 2
+					});
+			
+			} else { // TODO:
+		//upscale
+		  // back to original size
+				p = 1;
+				$layout
+					.css('transform', 'scale(' + p + ')')
+					.offset({
+						'top':  settings.marginTop + settings.negativeMargin - (collageOffsetTop * p),
+						'left':  -(canvasWidth*p - mainWidth) / 2
+					});
+		
+			}
 
-						$container.css('height', mainHeight);
+			$container.css('height', mainHeight);
 
-						//console.log('ADJUST: Collage is adjusted to ', window.innerWidth + ' x ' + window.innerHeight, 'screen resolution with the scale factor of ', p ? p : 0);
+			//console.log('ADJUST: Collage is adjusted to ', window.innerWidth + ' x ' + window.innerHeight, 'screen resolution with the scale factor of ', p ? p : 0);
 				
 		} // end: adjust
 			
 	} // end: methods
 
 
+// --- BEGIN -----------------------------------------------------------------------------------------------
 
 	$.fn.clg = function() {
 		console.time('Render time'); // testing
@@ -359,26 +363,25 @@ console.log('lw (winWidth/colWidth): ' + lw, 'lh ( (mainH - negMargs)*2 / colHei
 
 	};
 
+// --- Utilities --------------------------------------------------------------------------------------------
 
- //************************ Utilities *********************************
-
- function getRandomColor() {
-		 var letters = '0123456789ABCDEF'.split('');
-		 var color = '#';
-		 for (var i = 0; i < 6; i++ ) {
-				 color += letters[Math.floor(Math.random() * 16)];
-		 }
-		 return color;
- }
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF'.split('');
+		var color = '#';
+		for (var i = 0; i < 6; i++ ) {
+			 color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
 
  // just extending jquery for using vendor prefixes
- $.fn.__pref = function (k, v) {
-		 return $(this)
-				 .css('-webkit-' + k, v)
-				 .css('-moz-' + k, v)
-				 .css('-o-' + k, v)
-				 .css('-ms-' + k, v)
-				 .css(k, v);
- };
+	$.fn.__pref = function (k, v) {
+		return $(this)
+			.css('-webkit-' + k, v)
+			.css('-moz-' + k, v)
+			.css('-o-' + k, v)
+			.css('-ms-' + k, v)
+			.css(k, v);
+	};
 
 })( jQuery, ClgCore );
