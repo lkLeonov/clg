@@ -1,5 +1,5 @@
 /*!
- * clg v1.0
+ * clg v0.9
  * Collage grid layout plugin core
  * 
  * MIT License

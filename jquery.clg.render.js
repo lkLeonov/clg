@@ -143,12 +143,18 @@
 				});
 
 				// storing data in collage element
+
 				$collage
 					.attr('data-canvas-width', opts.calc.contW)
 					.attr('data-canvas-height', opts.calc.contH)
 					.attr('data-top', newClg.props.top)
 					.attr('data-width', newClg.props.width)
-					.attr('data-height', newClg.props.height)
+					.attr('data-height', newClg.props.height);
+
+console.log('---------COLLAGE_W: ', newClg.props.width);
+console.log('---------COLLAGE_H: ', newClg.props.height);
+console.log('---------COLLAGE_W_data: ', $collage.attr('data-width'));
+console.log('---------COLLAGE_H_data: ', $collage.attr('data-height'));
 			}
 
 			// show: // proper adjusting applies only when layout is in document flow
@@ -279,11 +285,11 @@
 		adjust: function($container, $layout, settings, onResizeHandled) {
 
 			var 
-				canvasWidth  = $layout.data('canvas-width'), // TODO: pass this props directly via attribute object
-				canvasHeight  = $layout.data('canvas-height'),
-				collageOffsetTop  = $layout.data('top'),
-				collageHeight  = $layout.data('height'),
-				collageWidth  = $layout.data('width');
+				canvasWidth  = $layout.attr('data-canvas-width'), // TODO: pass this props directly via attribute object
+				canvasHeight  = $layout.attr('data-canvas-height'),
+				collageOffsetTop  = $layout.attr('data-top'),
+				collageHeight  = $layout.attr('data-height'),
+				collageWidth  = $layout.attr('data-width');
 
 console.log('colW: ' + collageWidth, 'colH: ' + collageHeight );
 
