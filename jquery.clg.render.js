@@ -68,7 +68,9 @@
 			}
 
 				if (isRendered) {
-					$items.find('.inner').css('opacity', 0); // for re-animating
+					console.log('RENDER: Already rendered, opacity to 0');
+					$items.find('.inner').__pref('transition', 'none').css('opacity', 0); // for re-animating
+					
 					// clearing position is probably optional, because of the triggering opacity on items' wrappers + toggling display on items
 					$items.css({
 						top: '',
@@ -203,6 +205,7 @@
 					
 				}
 				else { // current is active
+					console.log('----------------CURRENT IS ACTIVE')
 					// just hiding items using opacity for re-animating
 					$(activeClg).find('.inner').css('opacity', 0);
 				}
@@ -255,7 +258,7 @@
 				}
 			}
 			else { // already rendered
-			 
+			 	$items.find('.inner').__pref('transition', 'opacity ' + (settings.thumbSpeed / 1000.00) + 's ease-in-out'); // restoring opacity animation after removing it in render (isRendered)
 				$items.each(function(i, item) { // TODO: check for items - urls equality
 					var 
 						$item = $(item),
