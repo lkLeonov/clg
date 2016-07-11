@@ -37,7 +37,8 @@ button {
 	border: 1px solid #5f5f5f;
 	color: #5f5f5f;
 	font-family: Monospace;
-	box-shadow: 4px 3px 2px 0px #d0d0d0;
+	box-shadow: 4px 3px 2px 0px rgba(81, 13, 13, 0.27);
+	background: rgba(240, 255, 255, 0.8);
 
 	/*sometimes canvas may overlap the interface in header, so: */
 	position: fixed;
