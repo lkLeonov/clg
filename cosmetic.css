@@ -41,6 +41,7 @@ button {
 
 	/*sometimes canvas may overlap the interface in header, so: */
 	position: fixed;
+	left: 50%; /* for IE */
 	z-index: 1;
 	margin-left: -40px; 
 }
