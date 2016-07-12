@@ -30,7 +30,7 @@ button {
 	margin: 1em;
     padding: 1em;
     margin: 1.5vh;
-    padding: .7vw;
+    /*padding: .7vw;*/
     outline: none;
     cursor: pointer;
     border: 1px solid #e8e8e8;
