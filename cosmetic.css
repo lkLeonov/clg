@@ -12,7 +12,6 @@ footer {
     z-index: -1;
     text-align: center;
     font-size: .9em;
-    color: #5f5f5f;
 }
 	footer div {
 		position: absolute;
@@ -21,25 +20,24 @@ footer {
 		margin-bottom: 1em;
 	}
 		footer span {
-			color: #5a5a5a;
 			font-weight: bold;
 			text-decoration: underline;
 		}
 
-header, footer { background-color: #ebf2ff; }
+header, footer { background-color: #3d3d3d; color: white; }
 
 button {
 	margin: 1em;
-	padding: 1em;
-	margin: 1.5vh;
-	padding: .7vw;
-	outline: none;
-	cursor: pointer;
-	border: 1px solid #5f5f5f;
-	color: #5f5f5f;
-	font-family: Monospace;
-	box-shadow: 4px 3px 2px 0px rgba(81, 13, 13, 0.27);
-	background: rgba(240, 255, 255, 0.8);
+    padding: 1em;
+    margin: 1.5vh;
+    padding: .7vw;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    font-family: Monospace;
+    box-shadow: 4px 3px 2px 0px black;
+    background: rgba(78, 78, 78, 0.8);
+	color: white;
 
 	/*sometimes canvas may overlap the interface in header, so: */
 	position: fixed;
@@ -47,4 +45,4 @@ button {
 	margin-left: -40px; 
 }
 
-button:active {	box-shadow: 2px 2px 2px 0px #d6d6d6; }
+button:active {	box-shadow: 2px 2px 2px 0px rgba(81, 13, 13, 0.27); }
